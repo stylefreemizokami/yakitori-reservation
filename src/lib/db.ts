@@ -7,12 +7,12 @@ export async function getConnection() {
     // user: 'root',
     // password: 'Ay2DzVx8T27T',
     // database: 'mysql',
-    
+
     // dev
-    host: process.env.MYSQL_HOST,
-    user: process.env.MYSQL_USER,
-    password: process.env.MYSQL_PASSWORD,
-    database: process.env.MYSQL_DATABASE,
+    host: process.env.DATABASE_HOST,
+    user: process.env.DATABASE_USER,
+    password: process.env.DATABASE_PASSWORD,
+    database: process.env.DATABASE_NAME,
   });
   return connection;
 }
