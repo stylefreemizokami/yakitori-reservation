@@ -1,5 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import type { RowDataPacket } from 'mysql2/promise';
 import { getConnection } from '../../lib/db';
+
+interface TimeSlotRow extends RowDataPacket {
+  reservation_hour: number;
+  available_seats: number;
+  is_full: number; // SQL の CASE は 0/1
+}
 
 interface TimeSlot {
   reservation_hour: string;  // number → string
@@ -25,7 +32,7 @@ export default async function handler(
     const connection = await getConnection();
 
     // 営業時間11〜21時のリストを LEFT JOIN して残席計算
-    const [rows] = await connection.execute(
+    const [rows] = await connection.execute<TimeSlotRow[]>(
       `
       SELECT
           h.hour AS reservation_hour,
@@ -56,7 +63,7 @@ export default async function handler(
     );
 
     // reservation_hour を string に変換して返す
-    const formattedRows: TimeSlot[] = (rows as any[]).map(r => ({
+    const formattedRows: TimeSlot[] = rows.map(r => ({
       reservation_hour: String(r.reservation_hour),
       available_seats: r.available_seats,
       is_full: r.is_full === 1,
