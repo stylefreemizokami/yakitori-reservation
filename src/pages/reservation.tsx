@@ -10,13 +10,7 @@ const geistSans = Geist({
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
 export default function Reservarion() {
-  const router = useRouter();
 
   const [name, setName] = useState<string>('');
   const [date, setDate] = useState<string>('');
