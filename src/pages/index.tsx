@@ -31,7 +31,7 @@ export default function Home() {
 
         <main className={styles.main}>
         <div>
-          <Image src="yakitori.jpg" alt="焼き鳥" width={400} height={300} />
+          <Image src="/yakitoriya.jpg" alt="焼き鳥" width={900} height={600} />
         </div>
           <div className={styles.ctas}>
            営業時間のご案内

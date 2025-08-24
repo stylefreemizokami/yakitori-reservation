@@ -1,13 +1,22 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getConnection } from '../../lib/db';
+import type { RowDataPacket } from 'mysql2/promise';
 
 interface ReservationBody {
   name: string;
-  date: string;   // YYYY-MM-DD
+  date: string;
   tel: string;
-  hour: string;   // "11" など（数値文字列）
-  people: string; // "2" など（数値文字列）
+  hour: string;
+  people: string;
   note: string;
+}
+
+interface ReservedRow extends RowDataPacket {
+  reserved: number;
+}
+
+interface SettingsRow extends RowDataPacket {
+  max_capacity: number;
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -30,14 +39,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const connection = await getConnection();
 
     // 1) キャパ取得
-    const [settingsRows] = await connection.execute('SELECT max_capacity FROM settings LIMIT 1');
+    const [settingsRows] = await connection.execute<SettingsRow[]>(
+      'SELECT max_capacity FROM settings LIMIT 1'
+    );
     if (!Array.isArray(settingsRows) || settingsRows.length === 0) {
       return res.status(500).json({ success: false, message: '設定が見つかりません' });
     }
-    const maxCapacity = (settingsRows as any)[0].max_capacity as number;
+    const maxCapacity = settingsRows[0].max_capacity;
 
     // 2) 既存予約合計
-    const [reservedRows] = await connection.execute(
+    const [reservedRows] = await connection.execute<ReservedRow[]>(
       `SELECT IFNULL(SUM(number_of_people), 0) AS reserved
          FROM reservations
         WHERE reservation_date = ?
@@ -45,7 +56,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           AND status IN ('pending','confirmed')`,
       [date, hourNum]
     );
-    const reserved = (reservedRows as any)[0].reserved as number;
+    const reserved = reservedRows[0].reserved;
 
     const available = maxCapacity - reserved;
 

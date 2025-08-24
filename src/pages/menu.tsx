@@ -30,7 +30,7 @@ export default function Home() {
       >
 
         <main className={styles.main}>
-          <Image src="menu.png" alt="焼き鳥メニュー" width={400} height={300} />
+          <Image src="/menu.png" alt="/焼き鳥メニュー" width={800} height={500} />
           <h1>ようこそ 炭火焼き鳥へ</h1>
           <p>当店自慢の焼き鳥メニューをご覧ください。</p>
         </main>
