@@ -1,6 +1,5 @@
 import Head from "next/head";
-import { useRouter } from "next/router";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 import Header from "../../components/Header";
 import { useState , useEffect} from 'react';
