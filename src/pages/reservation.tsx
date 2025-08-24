@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export default function reservarion() {
+export default function Reservarion() {
   const router = useRouter();
 
   const [name, setName] = useState<string>('');
@@ -53,7 +53,11 @@ const handleSubmit = async (e: React.FormEvent) => {
 
 const loadTimes = async (date: string) => {
   const res = await fetch(`/api/reservetimes?date=${date}`);
-  const times = await res.json();
+  const times: {
+    reservation_hour: string;
+    available_seats: number;
+    is_full: boolean;
+  }[] = await res.json();
 
   const select = document.getElementById("hour") as HTMLSelectElement;
   if (select) {
@@ -75,7 +79,7 @@ const loadTimes = async (date: string) => {
     if(date){
       loadTimes(date);
     }
-  }, [message, date]);
+  }, [date]);
 
 
   return (
@@ -88,7 +92,7 @@ const loadTimes = async (date: string) => {
       </Head>
       <Header />
       <div
-        className={`${styles.page} ${geistSans.variable} ${geistMono.variables}`}
+        className={`${styles.page} ${geistSans.variable} `}
       >
         <main className={styles.main}>
           {message &&
@@ -103,19 +107,19 @@ const loadTimes = async (date: string) => {
           キャンセルはこちらの番号からお願いします。（090-1234-5678）
           <form onSubmit={handleSubmit} action="/reserve" method="post" className="reserve-form">
             <div className="form-group">
-              <label id="name">お名前：</label>
+              <label htmlFor="name">お名前：</label>
               <input value={name} onChange={(e) => setName(e.target.value)} type="text" id="name" name="name" required></input>
             </div>
             <div className="form-group">
-              <label id="tel">電話番号：</label>
+              <label htmlFor="tel">電話番号：</label>
               <input value={tel} onChange={(e) => setTel(e.target.value)} type="tel" id="tel" name="tel" pattern="\d{10,11}"  inputMode="numeric" placeholder="09012345678" required></input>
             </div>
             <div className="form-group">
-              <label id="reservation-date">予約日：</label>
+              <label htmlFor="reservation-date">予約日：</label>
               <input value={date} onChange={(e) => setDate(e.target.value)} type="date" id="date" name="reservation_date" required></input>
             </div>
             <div className="form-group">
-              <label id="reservation-hour">予約時間：</label>
+              <label htmlFor="reservation-hour">予約時間：</label>
                 <select
                   value={hour}
                   onChange={(e) => setHour(e.target.value)}
@@ -127,11 +131,11 @@ const loadTimes = async (date: string) => {
                 </select>
             </div>
             <div className="form-group">
-              <label id="number-of-people">人数：</label>
+              <label htmlFor="number-of-people">人数：</label>
               <input value={people} onChange={(e) => setPeople(e.target.value)} type="number" id="people" name="number_of_people" min="1" max="10" required></input>
             </div>
             <div className="form-group">
-              <label id="note">ご要望（任意）：</label>
+              <label htmlFor="note">ご要望（任意）：</label>
               <input value={note} onChange={(e) => setNote(e.target.value)} type="text" id="note" name="note" placeholder="例：アレルギー、席の希望など"></input>
             </div>
             <div>

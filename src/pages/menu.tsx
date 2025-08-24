@@ -1,8 +1,6 @@
 import Head from "next/head";
-import Image from "next/image";
 import { Geist, Geist_Mono } from "next/font/google";
 import styles from "@/styles/Home.module.css";
-import Link from "next/link";
 import Header from "../../components/Header";
 
 
@@ -32,7 +30,6 @@ export default function Home() {
 
         <main className={styles.main}>
           <img src="menu.png" className={styles.menu} alt="炭火焼き鳥メニュー"></img>
-
           <h1>ようこそ 炭火焼き鳥へ</h1>
           <p>当店自慢の焼き鳥メニューをご覧ください。</p>
         </main>

@@ -1,8 +1,6 @@
 import Head from "next/head";
-import Image from "next/image";
 import { Geist, Geist_Mono } from "next/font/google";
 import styles from "@/styles/Home.module.css";
-import Link from "next/link";
 import Header from "../../components/Header";
 
 
@@ -32,7 +30,7 @@ export default function Home() {
 
         <main className={styles.main}>
                  <div>
-        <img src="yakitoriya.jpg"></img>
+        <img src="yakitoriya.jpg" alt="yakitoriya"></img>
         </div>
           <div className={styles.ctas}>
            営業時間のご案内
