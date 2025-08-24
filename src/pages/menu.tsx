@@ -29,7 +29,7 @@ export default function Home() {
       >
 
         <main className={styles.main}>
-          <Image src="menu.png" className={styles.menu} alt="炭火焼き鳥メニュー" /></img>
+          <img src="menu.png" className={styles.menu} alt="炭火焼き鳥メニュー"></img>
           <h1>ようこそ 炭火焼き鳥へ</h1>
           <p>当店自慢の焼き鳥メニューをご覧ください。</p>
         </main>
