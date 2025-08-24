@@ -32,7 +32,7 @@ export default function Home() {
 
         <main className={styles.main}>
                  <div>
-        <img src="焼き鳥や.jpg"></img>
+        <img src="yakitoriya.jpg"></img>
         </div>
           <div className={styles.ctas}>
            営業時間のご案内
